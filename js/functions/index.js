@@ -66,7 +66,7 @@ function get_recharge_options(operator) {
               {
                 'type': 'web_url',
                 'title': 'Know More',
-                'url': 'https://www.google.com'
+                'url': 'https://verloop.io'
               }
             ]
           },
@@ -87,7 +87,7 @@ function get_recharge_options(operator) {
               {
                 'type': 'web_url',
                 'title': 'Know More',
-                'url': 'https://www.google.com'
+                'url': 'https://verloop.io'
               }
             ]
           }
@@ -112,7 +112,7 @@ function get_recharge_options(operator) {
               {
                 'type': 'web_url',
                 'title': 'Know More',
-                'url': 'https://www.google.com'
+                'url': 'https://verloop.io'
               }
             ]
           },
@@ -133,7 +133,7 @@ function get_recharge_options(operator) {
               {
                 'type': 'web_url',
                 'title': 'Know More',
-                'url': 'https://www.google.com'
+                'url': 'https://verloop.io'
               }
             ]
           }
@@ -170,7 +170,7 @@ function validate_options(operator, amount) {
 function get_payment_link(operator, phonenumber, amount) {
   if (validate_options(operator, phonenumber, amount)) {
     // TODO: Generate a unique payment link and order_id
-    payment_link = "https://www.google.com"
+    payment_link = "https://verloop.io"
     order_id = "skahjdfwousjklfn"
     return {
       'next_block': '',

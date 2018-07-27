@@ -30,7 +30,13 @@ Verloop server sends the request to your HTTP server in the following JSON forma
     "phone": "",
     "avatar": ""
   },
-  "state": {}
+  "state": {},
+  "visitor_custom_fields": {
+    "customerId": "ABDBA905636"
+  }, 
+  "room_custom_fields": {
+    "key": "value"
+  }
 }
 ```
 
@@ -43,10 +49,14 @@ recipe.
 
 * `visitor`: A JSON object having all fields related to the visitor of your website.
 
-* `state`: A JSON object which can hold custom key, value pairs. The value of this
-JSON object has to be set in the response. The same state will be returned in the
+* `state`: A JSON object which can hold custom key, value pairs. The value of this JSON object has to be set in the response. The same state will be returned in the
 next webhook request. The state is always empty for the first webhook request of
 the conversation.
+
+* `visitor_custom_fields`: A JSON object which can hold custom key, value pairs. You can set the custom fields for the visitor by customizing the Verloop widget installation script.
+
+* `room_custom_fields`: A JSON object which can hold custom key, value pairs. You can set the custom fields for the room/conversation by customizing the Verloop widget installation script.
+
 
 ## Response Format
 Verloop expects the response to be in the following format.

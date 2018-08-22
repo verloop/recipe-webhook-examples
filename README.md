@@ -107,7 +107,7 @@ Note: All the variables should be first declared in the Recipe builder interface
 
 * `state`: A JSON object which can hold custom key, value pairs. The same state is
 returned in the subsequent webhook requests. In the sample response above, an `orderid`
-key is being set.
+key is being set. These key values cannot be referenced through the Recipe builder UI.
 
 * `exports`: A JSON object having the details of all the templates to be created.
 In the above response, a template `OperatorList` is being created.

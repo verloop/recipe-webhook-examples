@@ -113,7 +113,7 @@ key is being set. These key values cannot be referenced through the Recipe build
 In the above response, a template `OperatorList` is being created.
 Its a `Quick Reply` template. See list of all possible [types of templates](#types-of-templates).
 These templates can be used in the subsequent blocks. The templates and their types
-have to declared while configuring the webhook block in the Recipe builder interface.
+have to declared while configuring the webhook block in the Recipe builder interface. If no template have to be returned any empty dictionary should be retuned.
 
 ## Types of Templates
 ### Quick Reply Template

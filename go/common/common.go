@@ -58,15 +58,11 @@ func Log(f func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
 //Auth is a basic authorization decorator middeware
 func Auth(f func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		header := r.Header
 		authorized := false
-		for k, s := range header {
-			if k == authHeaderKey {
-				for _, v := range s {
-					if authValue == v {
-						authorized = true
-					}
-				}
+		for _, v := range r.Header.Values(authHeaderKey) {
+			if v == authValue {
+				authorized = true
+				break
 			}
 		}
 		if authorized {

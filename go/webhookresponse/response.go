@@ -41,8 +41,9 @@ func (this *WebhookResponse) AddVariable(key string, v string) {
 }
 
 type Operators struct {
-	Title  string  `json:"title"`
-	Action Actions `json:"action"`
+	Title    string   `json:"title"`
+	Action   Actions  `json:"action"`
+	Triggers []string `json:"triggers,omitempty"`
 }
 
 func checkValidOperator(name string) bool {
@@ -62,8 +63,9 @@ func init() {
 
 func NewOperators(title string, Action Actions) Operators {
 	return Operators{
-		Title:  title,
-		Action: Action,
+		Title:    title,
+		Action:   Action,
+		Triggers: make([]string, 0),
 	}
 }
 
@@ -83,6 +85,13 @@ func NewActions(blockname string) Actions {
 //AddVariable add any list of custom variables pertaining to the action
 func (this *Actions) AddVariable(key, value string) {
 	this.Variables[key] = value
+}
+
+//AddTriggers adds a list of keywords which would trigger the action
+func (this *Operators) AddTriggers(t ...string) {
+	for _, k := range t {
+		this.Triggers = append(this.Triggers, k)
+	}
 }
 
 //Plan hold different plans of operator, Buttons are slice of web_url or postback buttons
@@ -147,8 +156,12 @@ func ConstructOperators() *WebhookResponse {
 	a1.AddVariable("operator", "Vodafone")
 	a2 := NewActions("Get_Plans_Wait")
 	a2.AddVariable("operator", "Airtel")
-	res.AddExportList("OperatorList", NewOperators("Vodafone", a1))
-	res.AddExportList("OperatorList", NewOperators("Airtel", a2))
+	o1 := NewOperators("Vodafone", a1)
+	o1.AddTriggers("myvphone")
+	o2 := NewOperators("Airtel", a2)
+	o2.AddTriggers("myaphone")
+	res.AddExportList("OperatorList", o1)
+	res.AddExportList("OperatorList", o2)
 	return &res
 }
 

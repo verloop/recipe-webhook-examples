@@ -7,6 +7,9 @@ server is based on Flask and you have to host it on your own.
 [`js`](js/) directory has an example of setting up a HTTP server in Javascript.
 The example uses Firebase cloud functions to host the serverless code.
 
+[`golang`](go/) directory has an example of setting up a HTTP server in Go lang.
+The example uses `net/http` package.
+
 ## Request Format
 Verloop server sends the request to your HTTP server in the following JSON format.
 ```javascript
@@ -79,7 +82,8 @@ Verloop expects the response to be in the following format.
           "variables": {
             "operator": "Airtel"
           }
-        }
+        },
+        "triggers":["The 4G Girl"]
       }
       {
         "title": "Vodafone",
@@ -88,7 +92,8 @@ Verloop expects the response to be in the following format.
           "variables": {
             "operator": "Vodafone"
           }
-        }
+        },
+        "triggers":["Zoozoo","Pug"]
       }
     ]
   }
@@ -129,7 +134,8 @@ of all the quick reply options.
         "variable_name": "variable_value",
         "another_variable_name": "another_variable_value"
       }
-    }
+    },
+    "triggers":["trigger", "list"]
   },
   {
     "title": "Title",
@@ -139,7 +145,8 @@ of all the quick reply options.
         "variable_name": "variable_value",
         "another_variable_name": "another_variable_value"
       }
-    }
+    },
+    "triggers":["trigger", "list"]
   }
 ]
 ```
@@ -148,6 +155,7 @@ of all the quick reply options.
     * `next_block`: Which block to go to when the user clicks this option
     * `variables`: The name and value of variables to be set. Multiple variables
     can be set here.
+  * `triggers`: List of words which triggers the next_block when the matching words is entered by user.
 
 ### Buttons Template
 This template can be used to construct a Buttons block.

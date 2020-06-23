@@ -1,14 +1,14 @@
-package common
+package server
 
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
+
+	logger "github.com/sirupsen/logrus"
 )
 
 func IsDebugEnabled() bool {
@@ -31,19 +31,14 @@ func init() {
 	}
 }
 
-//Log is a decorator middleware log request if DEBUG is set
-func Log(f func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+//Log is a middleware log request if DEBUG is set
+func Log(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if IsDebugEnabled() {
 			body, _ := ioutil.ReadAll(r.Body)
-			log.Println("Recived a request")
 			header := r.Header
-			log.Println("The headers are : ")
-			for k, s := range header {
-				fmt.Println(k, "=", s)
-			}
-			log.Println("The request is : ")
-			log.Println(string(body))
+			logger.WithField("header", header).WithField("body", string(body)).Info("Received a request")
+			defer logger.Info("Request processed")
 			//Check for non empty body and close it
 			//Do not defer the call as we need to set back the body
 			if body != nil {
@@ -51,13 +46,13 @@ func Log(f func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
 			}
 			r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
 		}
-		f(w, r)
-	}
+		next.ServeHTTP(w, r)
+	})
 }
 
-//Auth is a basic authorization decorator middeware
-func Auth(f func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+//Auth is a basic authorization middeware
+func Auth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authorized := false
 		for _, v := range r.Header.Values(authHeaderKey) {
 			if v == authValue {
@@ -66,10 +61,10 @@ func Auth(f func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
 			}
 		}
 		if authorized {
-			f(w, r)
+			next.ServeHTTP(w, r)
 		} else {
 			w.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(w).Encode(struct{ Error string }{"Unauthorized"})
 		}
-	}
+	})
 }

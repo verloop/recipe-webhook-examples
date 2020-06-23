@@ -1,4 +1,4 @@
-package webhookrequest
+package server
 
 //WebhookRequest is a sample request from wario
 type WebhookRequest struct {
@@ -9,11 +9,11 @@ type WebhookRequest struct {
 	RoomCode         int    `json:"room_code"`
 	RoomCustomFields struct {
 	} `json:"room_custom_fields"`
-	RoomType  string                         `json:"room_type"`
-	Source    string                         `json:"source"`
-	State     map[string]string              `json:"state,omitempty"`
-	UserID    string                         `json:"user_id"`
-	Variables map[string](map[string]string) `json:"variables"`
+	RoomType  string                              `json:"room_type"`
+	Source    string                              `json:"source"`
+	State     map[string]string                   `json:"state,omitempty"`
+	UserID    string                              `json:"user_id"`
+	Variables map[string](map[string]interface{}) `json:"variables"`
 	Visitor   struct {
 		Avatar string `json:"avatar"`
 		Email  string `json:"email"`

@@ -12,7 +12,7 @@ import (
 )
 
 func IsDebugEnabled() bool {
-	//Could have stored it in a localvariable but want a dynamic behaviour without restarting tha app
+	//Could have stored it in a localvariable but want a dynamic behavior without restarting tha app
 	return strings.ToLower(os.Getenv("DEBUG")) == "true"
 }
 
@@ -25,10 +25,7 @@ const (
 )
 
 func init() {
-	authValue = os.Getenv(authKey)
-	if authValue == "" {
-		authValue = authDefaultValue
-	}
+	authValue = GetEnvOrDefault(authKey, authDefaultValue)
 }
 
 //Log is a middleware log request if DEBUG is set

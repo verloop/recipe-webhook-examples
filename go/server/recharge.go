@@ -2,7 +2,8 @@ package server
 
 import (
 	"fmt"
-	"log"
+
+	logger "github.com/sirupsen/logrus"
 )
 
 //WebhookResponse has info about next block and quick replies
@@ -45,7 +46,7 @@ func (r *RechargeAPI) ConstructPlansForOperator(req *WebhookRequest) *WebhookRes
 
 	operatorKey, ok := req.Variables["operator"]
 	if !ok {
-		log.Println("operator key not present")
+		logger.Error("operator key not present")
 		req := NewWebhookResponse("Invalid_Operator")
 		return &req
 	}
@@ -53,7 +54,7 @@ func (r *RechargeAPI) ConstructPlansForOperator(req *WebhookRequest) *WebhookRes
 	operator, ok := operatorKey["parsed_value"]
 
 	if !ok || !checkValidOperator(operator.(string)) {
-		log.Println("invalid operator")
+		logger.Error("invalid operator")
 		req := NewWebhookResponse("Invalid_Operator")
 		return &req
 	}

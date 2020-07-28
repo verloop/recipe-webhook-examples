@@ -68,7 +68,8 @@ Verloop expects the response to be in the following format.
   "next_block":"Welcome",
   "variables": {
     "operator": "Airtel",
-    "rechargeNumber": "+919988776655"
+    "rechargeNumber": "+919988776655",
+    "sys_language" : ""
   },
   "state": {
     "order_id": "GuyrHft6FHyeur72"
@@ -109,6 +110,7 @@ be updated to reflect these values. All subsequent blocks will see the updated
 values of the variables.
 In the above example, two variables are being set: `operator` and `rechargeNumber`
 Note: All the variables should be first declared in the Recipe builder interface.
+  * `sys_language` is a system variable of type `Language`. It holds the current language in which the chat is being run. Webhooks can change the value of `sys_language` to available language name or id in the recipe and the subsequent chat flow will change to that language.
 
 * `state`: A JSON object which can hold custom key, value pairs. The same state is
 returned in the subsequent webhook requests. In the sample response above, an `orderid`

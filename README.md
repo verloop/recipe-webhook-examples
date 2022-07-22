@@ -236,28 +236,30 @@ initialises a list with multiple sections with each section containing multiple 
 
 ```javascript
 [{
-    "title": "Airtel Voice Recharge",
+    "title": "Airtel Voice",
     "items": [{
         "title": "Voice Pack 1",
         "subtitle": "subtitle 1"
       },
       {
-        "title": "Voice Pack - Diwali Offer",
+        "title": "Voice - Diwali Offer",
         "subtitle": "subtitle 2"
       }
     ]
   },
   {
-    "title": "Airtel Data Recharge",
+    "title": "Airtel Data",
     "items": [{
         "title": "Data Pack - 30GB",
         "subtitle": "sub1"
       },
       {
-        "title": "Data Pack - Unlimited",
+        "title": "Data - Unlimited",
         "subtitle": "sub 2"
       }
     ]
   }
 ]
 ```
+
+Note: Character length of `title` and `subtitle` cannot exceed 24 and 72 respectively.

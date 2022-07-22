@@ -228,3 +228,38 @@ initialises a slider with a single slide in it.
   * `buttons`: List of buttons for this card. Maximum of three buttons are allowed
   for a card. Each button can of type `postback` or `web_url`. See the [Buttons Template](#types-of-templates)
   section to understand how to create buttons.
+
+
+### List Template
+This template can be used in constructing a List block. The below example
+initialises a list with multiple sections with each section containing multiple items in it.
+
+```javascript
+[{
+    "title": "Airtel Voice",
+    "items": [{
+        "title": "Voice Pack 1",
+        "subtitle": "subtitle 1"
+      },
+      {
+        "title": "Voice - Diwali Offer",
+        "subtitle": "subtitle 2"
+      }
+    ]
+  },
+  {
+    "title": "Airtel Data",
+    "items": [{
+        "title": "Data Pack - 30GB",
+        "subtitle": "sub1"
+      },
+      {
+        "title": "Data - Unlimited",
+        "subtitle": "sub 2"
+      }
+    ]
+  }
+]
+```
+
+Note: Character length of `title` and `subtitle` cannot exceed 24 and 72 respectively.

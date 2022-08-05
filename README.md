@@ -263,3 +263,51 @@ initialises a list with multiple sections with each section containing multiple 
 ```
 
 Note: Character length of `title` and `subtitle` cannot exceed 24 and 72 respectively.
+
+### Catalog Template
+This template can be used in constructing a Catalog block. The below example
+initialises a Catalog with multiple sections with each section containing multiple product items in it.
+
+```javascript
+{
+  "catalog_type": "multiple",
+   "header": {
+        "value":"Airtel Offers",
+        "type":"text"
+      },
+  "body": "Special Diwali offers",
+  "footer": "Calls: Unlimited",
+  "id": "catalog_id",
+  "sections": [
+      {
+        "title": "Smart Recharge",
+        "product_items": [
+            {
+              "id": "product_retailer_id1" 
+            },
+            {
+              "id": "product_retailer_id1"
+            }
+          ]
+        },
+        {
+          "title": "Topup",
+          "product_items": [
+            {
+              "id": "product_retailer_id3"
+            },
+            {
+              "id": "product_retailer_id4"
+            }
+          ]
+        }
+      ]
+    }
+```
+
+Note: 
+1. Character length of `header` `value` in case of `type`==`text` cannot exceed 60.
+2. Character length of `body` , `footer` and `title` cannot exceed 60, 1024 and 24 respectively.
+3. Catalog `type` can accept `single` and `multiple`  in lowercase only.
+4. Supported `header` `type` are : `text`,`image`,`document` and `video` in lowercase only.
+5. For `multiple` catalog `type`, `body`, `header` and `title` is  mandatory.

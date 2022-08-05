@@ -270,8 +270,8 @@ initialises a Catalog with multiple sections with each section containing multip
 
 ```javascript
 {
-  "type": "muiltple",
-    "header": {
+  "catalog_type": "multiple",
+   "header": {
         "value":"Airtel Offers",
         "type":"text"
       },

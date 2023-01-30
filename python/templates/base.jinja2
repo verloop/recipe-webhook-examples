@@ -1,0 +1,46 @@
+from common.webhooker import WebHooker
+from common.datastructures import card, quick_reply, postback, url, action
+
+from local_services.{{ base_client_id }}.bots import {{ client_id }}BotLogic
+
+
+class Bot(WebHooker):
+    def __init__(self):
+        super(Bot, self).__init__()
+        self.bot_logic = {{ client_id }}BotLogic(base_url = "")
+    
+    # name of method = name of block in recipe
+    # Available kwargs are  visitor, variables, state, current_block, source
+    def my_block(self, *args, visitor, variables, **kwargs):
+        # next_block is where you want to go
+        # everything else is variable that exists in recipe
+        actn = action(next_block="Welcome", query="sawaal")
+        quickreplies = [
+            quick_reply(title="yes", action=actn),
+            quick_reply(title="no", action=action(next_block='Closure')),
+        ]
+        buttons = [
+            postback(title="Buy", action=actn),
+            url(title="Site", url="https://verloop.io")
+        ]
+        cards = [
+            card(title="My card", subtitle="clean", buttons=buttons)
+        ]
+        # keys = exported variable names
+        # values = exported variable values
+        self.export(list=cards, buttons=buttons, replies=quickreplies)
+
+        # Set variables on the recipe
+        self.variable(query="sawaal")
+        # Will take to Query block after current
+        self.next_block(name="Query")
+
+        # State just in case you need it.
+        # It will be passed to you in every method as the "state" kwarg
+        # State is shared across methods.
+        self.state = kwargs.get("state")
+        if not self.state:
+            self.state = {}
+        self.state["lol"] = "max"
+        
+        # No return is required. self is the return value.

@@ -1,0 +1,8 @@
+from local_services.{{ base_client_id }}.service import {{ client_id }}Service
+from local_services.{{ base_client_id }}.renderer import {{ client_id }}Renderer
+from utils.mario.mario import MarioUtils
+
+class {{ client_id }}BotLogic(MarioUtils):
+    def __init__(self, base_url: str):
+        self.service = {{ client_id }}Service(base_url = base_url)
+        self.renderer = {{ client_id }}Renderer()

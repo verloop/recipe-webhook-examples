@@ -1,0 +1,16 @@
+from typing import Union
+from verloopcontext.context import Context
+
+class {{ client_id }}Renderer(object):
+    def __init__(self) -> None:
+        pass
+    
+    def render_lists(
+        self,
+        context: Context,
+        data: Union[list, dict],
+        local_state: dict,
+        next_block: Union[str, None],
+        **kwargs: dict,
+    ) -> dict:
+        pass

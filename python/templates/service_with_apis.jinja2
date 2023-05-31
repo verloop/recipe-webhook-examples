@@ -1,0 +1,40 @@
+{%- macro request_method(request) %}
+    def {{ request.method_name }}(self, context: Context):
+        """
+        calling {{ request.method_name }}
+        """
+        {% filter indent(width=8, first=False) %}headers = {{ dict(request.headers) | safe }}{% endfilter %}
+    
+        {% filter indent(width=8, first=False) %}params = {{ request.params | safe }}{% endfilter %}
+    
+        {% filter indent(width=8, first=False) %}data = {{ request.data | safe }}{% endfilter %}
+        resp = self.api_client.{{request.method.lower()}}(
+            endpoint="{{request.url}}",
+            headers=headers,
+            params=params,
+            {{ request.data_field }}=data,
+            context=context,
+        )
+            
+        return resp
+{%- endmacro%}
+
+
+{%- if file_exists %}{{ existing_file_content }}
+    {%- for request in requests %}
+        {{ request_method(request) }}
+    {%- endfor %}
+    
+{%- else %}from utils.api_client import APIClient
+from verloopcontext.context import Context
+
+
+class {{ client_id }}Service(object):
+    def __init__(self, base_url: str):
+        self.api_client = APIClient(base_url=base_url)
+        
+    {%- for request in requests %}
+        {{ request_method(request) }}
+    {%- endfor %}
+    
+{%- endif %}

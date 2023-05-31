@@ -3,6 +3,7 @@ from common.datastructures import card, quick_reply, postback, url, action
 
 from local_services.{{ base_client_id }}.bots import {{ client_id }}BotLogic
 
+from utils.uncategorized import set_state
 
 class Bot(WebHooker):
     def __init__(self):
@@ -11,9 +12,10 @@ class Bot(WebHooker):
     
     # name of method = name of block in recipe
     # Available kwargs are  visitor, variables, state, current_block, source
-    def my_block(self, *args, visitor, variables, **kwargs):
+    def my_block(self, *args, visitor, variables, context, **kwargs):
         # next_block is where you want to go
         # everything else is variable that exists in recipe
+        self.state = set_state(kwargs)
         actn = action(next_block="Welcome", query="sawaal")
         quickreplies = [
             quick_reply(title="yes", action=actn),

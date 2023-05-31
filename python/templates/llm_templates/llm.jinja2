@@ -1,0 +1,43 @@
+from common.webhooker import WebHooker
+
+from utils.lllm import LLMClient
+from utils.uncategorized import set_state
+
+class Bot(WebHooker):
+    def __init__(self):
+        super(Bot, self).__init__()
+        self.llm = LLMClient(client_id="{{ base_client_id }}")
+
+    def get_user_query(self, *args, visitor, context, variables, **kwargs):
+        self.state = set_state(kwargs)
+        LOGGER = context.get_logger()
+
+        last_user_query = kwargs.get("_last_text_message", "")
+        room_code = kwargs.get("room_code", "")
+
+        webhook_count = self.state.get("webhook_count", 1)
+        if webhook_count == 1:
+            last_user_query = "Hi"
+
+        try:
+            resp = self.llm.get_chat_context(query=last_user_query, room=room_code, context=context)
+        except Exception as e:
+            LOGGER.error("Error in getting resp", exc_info=True)
+            self.next_block(name="API ERROR")
+            return
+
+        self.state["webhook_count"] = webhook_count + 1
+        llm_resp = resp.get("llm_response", "")
+
+        llm_resp = llm_resp.replace("<END_CONVERSATION>", "")
+
+        self.variable(query=llm_resp)
+
+        if "<END>" in llm_resp or "<TRANSFER>" in llm_resp:
+            llm_resp = llm_resp.replace("<END>", "")
+            llm_resp = llm_resp.replace("<TRANSFER>", "")
+            self.variable(query=llm_resp)
+            self.next_block(name="Close Conversation")
+            return
+
+        self.next_block(name="Continue Conversation")
